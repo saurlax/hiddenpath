@@ -28,22 +28,13 @@ export function useAI() {
     isLoading.value = true;
 
     try {
-      const response = await $fetch("/api/generate", {
+      const data = await $fetch("/api/completions", {
         method: "POST",
-        body: JSON.stringify({
-          messages: messages.value,
-          temperature: 0.7,
-        }),
+        body: { messages: messages.value },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      const text = data?.choices?.[0]?.message?.content || "";
 
-      const data = await response.json();
-      const text = data?.choices?.[0]?.message?.content || "(无回复)";
-
-      // 添加 AI 回复
       messages.value.push({
         role: "assistant",
         content: text,

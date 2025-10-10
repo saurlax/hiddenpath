@@ -13,10 +13,13 @@
       <input
         v-model="local"
         @keyup.enter="onSend"
-        placeholder="输入设计需求(按回车发送)"
+        placeholder="输入设计需求"
         class="flex-1 p-2 border rounded"
       />
-      <button @click="onSend" class="px-3 py-2 bg-blue-600 text-white rounded">
+      <button
+        @click="onSend"
+        class="px-3 py-2 border-none bg-blue-600 text-white rounded"
+      >
         发送
       </button>
     </div>

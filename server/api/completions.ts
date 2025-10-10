@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const { AI_BASE_URL, AI_API_KEY, AI_MODEL } = useRuntimeConfig();
 
-  return (await $fetch(`${AI_BASE_URL}/v1/generate`, {
+  const res = await $fetch(`${AI_BASE_URL}/chat/completions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -12,5 +12,8 @@ export default defineEventHandler(async (event) => {
       model: AI_MODEL,
       ...body,
     },
-  })) as { choices: { message: { content: string } }[] };
+  });
+  console.log(res);
+
+  return res as { choices: { message: { content: string } }[] };
 });
