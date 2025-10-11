@@ -1,25 +1,4 @@
-<template>
-  <div class="w-screen h-screen flex max-md:flex-col">
-    <TilePalette class="md:flex-basis-26" :tiles="tiles" @select="selectTile" />
-    <MapCanvas
-      class="flex-1"
-      :cols="x"
-      :rows="y"
-      :grid="gridCells"
-      :cellSize="40"
-      @cell-click="onCellClick"
-    />
-    <ChatBox class="flex-basis-1/4" :messages="messages" @send="ask" />
-  </div>
-</template>
-
 <script setup lang="ts">
-import { ref } from "vue";
-import TilePalette from "../../components/TilePalette.vue";
-import ChatBox from "../../components/ChatBox.vue";
-import MapCanvas from "../../components/MapCanvas.vue";
-import { useAI } from "../../composables/useAI";
-
 const { messages, ask } = useAI();
 
 const tiles = ref([
@@ -63,15 +42,28 @@ const tiles = ref([
 
 const x = 32;
 const y = 24;
-const gridCells = ref(Array(x * y).fill(null));
-const selectedTile = ref(null as any);
+const imgs = ref<string[][]>(
+  Array.from({ length: y }, () => Array(x).fill(""))
+);
+const selectedTile = ref<string | null>(null);
 
 function selectTile(tile: any) {
-  selectedTile.value = tile;
+  selectedTile.value = tile.img;
 }
 
-function onCellClick(idx: number) {
-  if (selectedTile.value) gridCells.value[idx] = selectedTile.value;
-  else gridCells.value[idx] = null;
+function click({ row, col }: { row: number; col: number }) {
+  if (selectedTile.value) {
+    imgs.value[row][col] = selectedTile.value;
+  } else {
+    imgs.value[row][col] = "";
+  }
 }
 </script>
+
+<template>
+  <div class="w-screen h-screen flex max-md:flex-col">
+    <TilePalette class="md:flex-basis-26" :tiles="tiles" @select="selectTile" />
+    <MapCanvas class="flex-1" :imgs="imgs" @click="click" />
+    <ChatBox class="flex-basis-1/4" :messages="messages" @send="ask" />
+  </div>
+</template>

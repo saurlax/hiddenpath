@@ -1,6 +1,4 @@
-import { ref } from "vue";
-
-export interface Message {
+interface Message {
   role: "system" | "user" | "assistant";
   content: string;
 }
@@ -19,7 +17,6 @@ export function useAI() {
   async function ask(userMessage: string) {
     if (!userMessage.trim() || isLoading.value) return;
 
-    // 添加用户消息
     messages.value.push({
       role: "user",
       content: userMessage,
