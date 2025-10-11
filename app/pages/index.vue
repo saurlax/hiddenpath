@@ -99,7 +99,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-screen h-screen flex max-md:flex-col">
+  <div class="w-screen h-100dvh flex max-md:flex-col">
     <TilePalette class="md:flex-basis-30" :tiles="tiles" @select="selectTile" />
     <MapCanvas class="flex-1" :map="map" @click="click" />
     <ChatBox class="flex-basis-1/4" :messages="messages" @send="onSend" />
