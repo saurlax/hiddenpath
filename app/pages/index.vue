@@ -49,7 +49,7 @@ const tiles = ref([
 const x = 32;
 const y = 24;
 const map = ref<string[][]>(
-  Array.from({ length: y }, () => Array(x).fill("floor_000"))
+  Array.from({ length: y }, () => Array(x).fill(""))
 );
 const selectedTile = ref<string | null>(null);
 
