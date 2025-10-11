@@ -1,7 +1,11 @@
 <template>
   <div class="p-2 bg-white flex flex-col">
     <div class="flex-1 overflow-auto mb-2">
-      <div v-for="(m, i) in messages" :key="i" class="mb-2">
+      <div
+        v-for="(m, i) in messages.filter((m) => !m.hidden)"
+        :key="i"
+        class="mb-2"
+      >
         <div :class="m.role === 'user' ? 'text-right' : 'text-left'">
           <div class="inline-block p-2 rounded-lg bg-gray-100">
             {{ m.content }}
@@ -29,7 +33,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 const props = defineProps<{
-  messages: Array<{ role: string; content: string }>;
+  messages: Array<{ role: string; content: string; hidden?: boolean }>;
 }>();
 const emit = defineEmits(["send"]);
 const local = ref("");

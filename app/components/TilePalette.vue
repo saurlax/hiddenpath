@@ -1,8 +1,8 @@
 <template>
-  <div class="p-2 bg-white overflow-auto flex md:flex-col gap-2">
+  <div class="p-2 bg-white overflow-auto inline-flex md:flex-col gap-2">
     <div v-for="(items, category) in tilesByCategory" :key="category">
       <div>{{ category }}</div>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex md:flex-wrap gap-2">
         <button
           v-for="tile in items"
           :key="tile.id"
@@ -10,7 +10,8 @@
           class="w-12 h-12 p-0 border-none"
         >
           <img
-            :src="tile.img"
+            v-if="tile.id"
+            :src="`/assets/${tile.id}.png`"
             :alt="tile.name"
             class="w-full h-full object-cover"
           />
